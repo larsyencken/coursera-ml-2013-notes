@@ -78,11 +78,13 @@
 ###  Cost function intuition
 
 - See lectures for worked example of cost function
-- What does the cost function look like?
+- What does the cost function look like generally?
+    - Think of a landscape with lots of mountains, hills and valleys
+- What does it look like for linear regression and other "nice" problems?
     - For one variable, the cost function is a U-shaped curve, with the best answer at the bottom
     - For two variables, the cost function is a 2d bowl, with the best answer at the bottom
     - For more variables, it's hard to visualise. Pretend it's a 2d bowl and carry on.
-- _How will we code this stuff?_ We'll write the code to calculate the cost function, and let automatic solvers find the parameters which minimize it for us. Think of it like a bowl, the solver just starts somewhere in the bowl then heads downhill from there.
+- _How will we code this stuff?_ We'll write the code to calculate the cost function, and let automatic solvers find the parameters which minimize it for us. Imagining a bowl, the solver starts somewhere random then heads downhill from there.
 
 ### Gradient descent
 
