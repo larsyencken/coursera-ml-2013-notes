@@ -6,6 +6,7 @@ TARGETS = \
 		  pdf/.gitignore \
 		  pdf/week1.pdf \
 		  pdf/week2.pdf \
+		  pdf/week3.pdf \
 
 default: $(TARGETS)
 
@@ -17,6 +18,10 @@ pdf/week1.pdf: week1.md header.tex
 
 pdf/week2.pdf: week2.md header.tex
 	pandoc -t latex -H header.tex --latex-engine=xelatex $< -o $@
+
+pdf/week3.pdf: week3.md header.tex
+	pandoc -t latex -H header.tex --latex-engine=xelatex $< -o $@
+
 
 watch:
 	make
