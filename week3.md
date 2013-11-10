@@ -49,7 +49,7 @@
 - We can add up costs for each case in the training set to get $J(\theta)$:
     - $J(\theta) = \frac{1}{m}\sum_{i = 1}^m \mathit{cost}(h_\theta(x^{(i)}, y^{(i)}))$
 - We can simplify the cost component to one line:
-    - $J(\theta) = \frac{1}{m}[\sum_{i = 1}^m y^{(i)}\log(h_\theta(x^{(i)}) + (1 - y^{(i)})\log(1 - h_\theta(x^{(i)}))]$
+    - $J(\theta) = -\frac{1}{m}[\sum_{i = 1}^m y^{(i)}\log(h_\theta(x^{(i)}) + (1 - y^{(i)})\log(1 - h_\theta(x^{(i)}))]$
 - For gradient descent, rule looks very similar to linear regression:
     - $\theta_j := \theta_j - \alpha \sum_{i = 1}^m (h_\theta(x^{(i)}) - y^{(i)})x_j^{(i)}$
     - Notice that $h_\theta(x)$ is the only part that's changed
@@ -68,10 +68,51 @@
 
 ### Multiclass problems
 
-- ``multiclass``: predicting an enum instead of a boolean
+- "multiclass": predicting an enum instead of a boolean
 - Examples
     - Email tagging: work, friends, family or hobby
     - Medical diagnosis: not ill, cold, flu
 - One vs all
     - Train a model to detect each class, ending up with $n$ models
     - When predicting, run it against all the models and pick the most confident
+
+## Regularization
+
+### Overfitting
+
+- _Underfitting_ or _bias_: when our model doesn't just doesn't fit the data well
+- _Overfitting_ or _variance_: when the model fits our _training_ data very well but works badly on new examples (_generalises_ poorly)
+- Overfitting's especially a problem when:
+    - You have a large number of features
+    - You use a high-degree polynomial to fit data
+- Approaches to combat it:
+    1. Reduce the number of features
+    2. _Regularisation_: penalise the use of too many active features in our model, thus ending up with models with less active features
+
+### Cost function
+
+- Intiution: smaller values for our parameters means a simpler hypothesis
+    - For example, if less important parameters $\theta_j$ are set to zero, our model no longer uses those terms
+- Achieve this by adding an extra term to our cost function
+    - $J(\theta) = \frac{1}{2m}[\sum_{i = 1}^m(h\theta(x^{(i)}) - y^{(i)})^2 + \lambda \sum_{i = 1}^n \theta_j^2]$
+    - Note that by convention there's no penalty on $\theta_0$
+    - $\lambda$ is called the _regularisation parameter_
+- If $\lambda$ is too large, we will underfit
+- If $\lambda$ is too low, we may overfit
+
+### Regularized linear regression
+
+- We have a slightly updated update rule for gradient descent:
+    - For $\theta_0$, the rule is the same as before
+    - For $\theta_j$ where $j > 0$, we have $\theta_j := \theta_j - \alpha [ \frac{1}{m}\sum_{i = 1}^m(h\theta(x^{(i)}) - y^{(i)})x_j^{(i)} + \frac{\lambda}{m}\theta_j ]$
+        - Refactored: $\theta_j := \theta_j(1 - \alpha\frac{\lambda}{m}) - \alpha\frac{1}{m}\sum_{i = 1}^m(h\theta(x^{(i)}) - y^{(i)})x_j^{(i)}$
+        - The term $(1 - \alpha\frac{\lambda}{m})$ must be $< 1$, and has the effect of favouring shrinking the parameter, all else being even
+- Normal equation updated:
+    - $\theta = (X^TX + \lambda D)^{-1} X^Ty$, where $D$ is $0$ at $(1, 1)$ and $1$ down the rest of the diagonal
+    - Advanced: if $\lambda > 0$, the above matrix being inverted will never be singular (i.e. non-invertible)
+
+### Regularized logistic regression
+
+- Add the regularization term to our cost function:
+    - $J(\theta) = -\frac{1}{m}[\sum_{i = 1}^m y^{(i)}\log(h_\theta(x^{(i)}) + (1 - y^{(i)})\log(1 - h_\theta(x^{(i)}))] + \frac{\lambda}{2m}\sum_{j = 1}^n \theta_j^2$
+- The update rule is the same as for linear regression, except that our $h\theta(x)$ uses the sigmoid function
