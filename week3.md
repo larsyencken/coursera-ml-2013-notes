@@ -18,7 +18,7 @@
 ### Hypothesis representation
 
 - Let $g(z) = \frac{1}{1 + e^{-z}}$ where $z = \theta^{T}x$
-- $g$ is called the {\em sigmoid function} or the {\em logistic function}
+- $g$ is called the _sigmoid function_ or the _logistic function_
 - In practice, this function squishes any $z$ value into something between 0 and 1
     - Large negative values of $z$ become close to zero
     - Large postive values of $z$ become close to one
