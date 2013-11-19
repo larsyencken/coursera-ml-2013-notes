@@ -7,6 +7,8 @@ TARGETS = \
 		  pdf/week1.pdf \
 		  pdf/week2.pdf \
 		  pdf/week3.pdf \
+		  pdf/week4.pdf \
+		  pdf/week5.pdf \
 
 PANDOC = pandoc -t latex -H header.tex --latex-engine=xelatex --variable fontsize=12pt
 
@@ -24,6 +26,11 @@ pdf/week2.pdf: week2.md header.tex
 pdf/week3.pdf: week3.md header.tex
 	$(PANDOC) $< -o $@
 
+pdf/week4.pdf: week4.md header.tex
+	$(PANDOC) $< -o $@
+
+pdf/week5.pdf: week5.md header.tex
+	$(PANDOC) $< -o $@
 
 watch:
 	make
